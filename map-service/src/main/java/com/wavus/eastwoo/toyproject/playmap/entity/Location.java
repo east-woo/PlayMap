@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "locations", schema = "place")
+@Table(name = "locations")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location {
@@ -20,7 +20,6 @@ public class Location {
     @Column(nullable = false)
     private String name;
 
-    @Lob
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)

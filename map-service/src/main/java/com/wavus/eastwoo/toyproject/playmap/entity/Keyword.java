@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "keywords", schema = "place")
+@Table(name = "keywords")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Keyword {
