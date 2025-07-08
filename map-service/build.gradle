@@ -59,4 +59,11 @@ sourceSets {
             srcDir "$buildDir/generated/sources/annotationProcessor/java/main"
         }
     }
+    test {
+        java {
+            srcDir "$buildDir/generated/sources/annotationProcessor/java/test" // 필요시 추가
+            srcDirs = ['src/test/java']
+        }
+    }
 }
+

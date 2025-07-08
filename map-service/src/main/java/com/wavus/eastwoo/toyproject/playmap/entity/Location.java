@@ -1,15 +1,17 @@
 package com.wavus.eastwoo.toyproject.playmap.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "locations")
 @Getter
+@AllArgsConstructor
+@Builder
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Location {
 
@@ -33,5 +35,5 @@ public class Location {
     private LocalDateTime createdAt;
 
     @Column(columnDefinition = "geometry(Point, 4326)")
-    private String geom; // PostGIS의 POINT 정보
+    private Point geom; // PostGIS의 POINT 정보
 }

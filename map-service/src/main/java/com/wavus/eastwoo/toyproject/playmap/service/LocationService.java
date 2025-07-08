@@ -1,19 +1,19 @@
 package com.wavus.eastwoo.toyproject.playmap.service;
 
+import com.wavus.eastwoo.toyproject.playmap.dto.KeywordResponse;
+import com.wavus.eastwoo.toyproject.playmap.dto.LocationRequest;
 import com.wavus.eastwoo.toyproject.playmap.dto.LocationResponse;
-import com.wavus.eastwoo.toyproject.playmap.repository.LocationRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class LocationService {
-
-    private final LocationRepository locationRepository;
-
-    public List<LocationResponse> getLocationsByKeyword(String keyword) {
-        return locationRepository.findByKeywordName(keyword);
-    }
+public interface LocationService {
+    List<LocationResponse> findByKeyword(String keyword);
+    LocationResponse findById(Long id);
+    List<LocationResponse> findWithinRadius(double lat, double lng, double radius);
+    List<KeywordResponse> findAllKeywords();
+    void save(LocationRequest request);
+    void update(Long id, LocationRequest request);
+    void delete(Long id);
+    List<KeywordResponse> getKeywordStatistics();
+    List<LocationResponse> findAll();
 }
