@@ -1,11 +1,13 @@
-package com.wavus.eastwoo.toyproject.playmap.repository;
+package com.wavus.eastwoo.toyproject.playmap.repository.impl;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wavus.eastwoo.toyproject.playmap.dto.LocationResponse;
-import com.wavus.eastwoo.toyproject.playmap.entity.QKeyword;
-import com.wavus.eastwoo.toyproject.playmap.entity.QLocation;
+import com.wavus.eastwoo.toyproject.playmap.domain.Location;
+import com.wavus.eastwoo.toyproject.playmap.domain.QKeyword;
+import com.wavus.eastwoo.toyproject.playmap.domain.QLocation;
+import com.wavus.eastwoo.toyproject.playmap.repository.LocationRepositoryCustom;
 import com.wavus.eastwoo.toyproject.playmap.utill.GeometryUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,19 @@ public class LocationRepositoryImpl implements LocationRepositoryCustom {
                         "ST_DWithin({0}, {1}, {2})",
                         location.geom, point, radius
                 ))
+                .fetch();
+    }
+
+    @Override
+    public List<Location> findByLatLngBoundary(double latMin, double latMax, double lngMin, double lngMax) {
+        QLocation location = QLocation.location;
+
+        return query
+                .selectFrom(location)
+                .where(
+                        location.latitude.between(latMin, latMax),
+                        location.longitude.between(lngMin, lngMax)
+                )
                 .fetch();
     }
 }

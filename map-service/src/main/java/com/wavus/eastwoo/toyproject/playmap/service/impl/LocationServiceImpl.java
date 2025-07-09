@@ -3,8 +3,8 @@ package com.wavus.eastwoo.toyproject.playmap.service.impl;
 import com.wavus.eastwoo.toyproject.playmap.dto.KeywordResponse;
 import com.wavus.eastwoo.toyproject.playmap.dto.LocationRequest;
 import com.wavus.eastwoo.toyproject.playmap.dto.LocationResponse;
-import com.wavus.eastwoo.toyproject.playmap.entity.Keyword;
-import com.wavus.eastwoo.toyproject.playmap.entity.Location;
+import com.wavus.eastwoo.toyproject.playmap.domain.Keyword;
+import com.wavus.eastwoo.toyproject.playmap.domain.Location;
 import com.wavus.eastwoo.toyproject.playmap.repository.KeywordRepository;
 import com.wavus.eastwoo.toyproject.playmap.repository.LocationRepository;
 import com.wavus.eastwoo.toyproject.playmap.service.LocationService;
@@ -124,5 +124,14 @@ public class LocationServiceImpl implements LocationService {
                 .longitude(location.getLongitude())
                 .address(location.getAddress())
                 .build();
+    }
+
+    @Override
+    public List<LocationResponse> findByBoundary(double latMin, double latMax, double lngMin, double lngMax) {
+        List<Location> locations = locationRepository.findByLatLngBoundary(latMin, latMax, lngMin, lngMax);
+
+        return locations.stream()
+                .map(LocationResponse::fromEntity)
+                .collect(Collectors.toList());
     }
 }

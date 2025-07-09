@@ -1,4 +1,4 @@
-package com.wavus.eastwoo.toyproject.playmap.entity;
+package com.wavus.eastwoo.toyproject.playmap.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -15,7 +15,7 @@ import com.querydsl.core.types.Path;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QKeyword extends EntityPathBase<Keyword> {
 
-    private static final long serialVersionUID = -667496238L;
+    private static final long serialVersionUID = 700600499L;
 
     public static final QKeyword keyword = new QKeyword("keyword");
 

@@ -1,4 +1,4 @@
-package com.wavus.eastwoo.toyproject.playmap.entity;
+package com.wavus.eastwoo.toyproject.playmap.domain;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QLocation extends EntityPathBase<Location> {
 
-    private static final long serialVersionUID = -2134619668L;
+    private static final long serialVersionUID = 1621673515L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 

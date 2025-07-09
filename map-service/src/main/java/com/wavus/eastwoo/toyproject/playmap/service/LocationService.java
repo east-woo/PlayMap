@@ -16,4 +16,5 @@ public interface LocationService {
     void delete(Long id);
     List<KeywordResponse> getKeywordStatistics();
     List<LocationResponse> findAll();
+    List<LocationResponse> findByBoundary(double latMin, double latMax, double lngMin, double lngMax);
 }

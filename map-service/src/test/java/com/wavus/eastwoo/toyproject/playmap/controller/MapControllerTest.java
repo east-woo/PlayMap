@@ -177,4 +177,41 @@ class MapControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
     }
+
+    @Test
+    void 지도_경계_내_장소_조회() throws Exception {
+        List<LocationResponse> responseList = List.of(
+                LocationResponse.builder()
+                        .id(1L)
+                        .name("한강공원")
+                        .description("서울의 대표적인 공원")
+                        .latitude(37.55)
+                        .longitude(126.97)
+                        .address("서울특별시 마포구")
+                        .build(),
+                LocationResponse.builder()
+                        .id(2L)
+                        .name("여의도 공원")
+                        .description("서울 도심 속 공원")
+                        .latitude(37.52)
+                        .longitude(126.95)
+                        .address("서울특별시 영등포구")
+                        .build()
+        );
+
+        // given
+        given(locationService.findByBoundary(37.50, 37.56, 126.90, 127.00))
+                .willReturn(responseList);
+
+        // when & then
+        mockMvc.perform(get("/api/map/locations/in-boundary")
+                        .param("latMin", "37.50")
+                        .param("latMax", "37.56")
+                        .param("lngMin", "126.90")
+                        .param("lngMax", "127.00"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].name").value("한강공원"))
+                .andExpect(jsonPath("$[1].name").value("여의도 공원"));
+    }
 }

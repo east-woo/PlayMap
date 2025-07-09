@@ -1,4 +1,4 @@
-package com.wavus.eastwoo.toyproject.playmap.entity;
+package com.wavus.eastwoo.toyproject.playmap.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

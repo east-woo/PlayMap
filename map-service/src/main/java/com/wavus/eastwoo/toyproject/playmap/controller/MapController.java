@@ -75,4 +75,14 @@ public class MapController {
     public ResponseEntity<List<LocationResponse>> getAllLocations() {
         return ResponseEntity.ok(locationService.findAll());
     }
+
+    /*지도 클러스터링/좌표 기반 장소 조회 API*/
+    @GetMapping("/locations/in-boundary")
+    public ResponseEntity<List<LocationResponse>> getLocationsInBoundary(
+            @RequestParam(name = "latMin") double latMin,
+            @RequestParam(name = "latMax") double latMax,
+            @RequestParam(name = "lngMin") double lngMin,
+            @RequestParam(name = "lngMax") double lngMax) {
+        return ResponseEntity.ok(locationService.findByBoundary(latMin, latMax, lngMin, lngMax));
+    }
 }
