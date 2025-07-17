@@ -85,4 +85,25 @@ public class MapController {
             @RequestParam(name = "lngMax") double lngMax) {
         return ResponseEntity.ok(locationService.findByBoundary(latMin, latMax, lngMin, lngMax));
     }
+
+
+    @GetMapping("/locations/in-boundary-with-keyword")
+    public ResponseEntity<List<LocationResponse>> getLocationsInBoundaryWithKeyword(
+            @RequestParam(name = "latMin") double latMin,
+            @RequestParam(name = "latMax") double latMax,
+            @RequestParam(name = "lngMin") double lngMin,
+            @RequestParam(name = "lngMax") double lngMax,
+            @RequestParam(name = "keyword") String keyword) {
+        return ResponseEntity.ok(locationService.findByBoundaryAndKeyword(latMin, latMax, lngMin, lngMax, keyword));
+    }
+
+    @GetMapping("/locations/nearby")
+    public ResponseEntity<List<LocationResponse>> getNearbyLocations(
+            @RequestParam("lat") double latitude,
+            @RequestParam("lng") double longitude,
+            @RequestParam("radius") int radiusInMeters
+    ) {
+        List<LocationResponse> nearbyLocations = locationService.findNearby(latitude, longitude, radiusInMeters);
+        return ResponseEntity.ok(nearbyLocations);
+    }
 }

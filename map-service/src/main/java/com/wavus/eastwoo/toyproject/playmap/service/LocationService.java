@@ -17,4 +17,6 @@ public interface LocationService {
     List<KeywordResponse> getKeywordStatistics();
     List<LocationResponse> findAll();
     List<LocationResponse> findByBoundary(double latMin, double latMax, double lngMin, double lngMax);
+    List<LocationResponse> findByBoundaryAndKeyword(double latMin, double latMax, double lngMin, double lngMax, String keyword);
+    List<LocationResponse> findNearby(double lat, double lng, int radiusInMeters);
 }

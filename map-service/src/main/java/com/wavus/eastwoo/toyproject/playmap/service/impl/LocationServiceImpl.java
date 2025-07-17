@@ -134,4 +134,19 @@ public class LocationServiceImpl implements LocationService {
                 .map(LocationResponse::fromEntity)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<LocationResponse> findByBoundaryAndKeyword(double latMin, double latMax, double lngMin, double lngMax, String keyword) {
+        return locationRepository.findByBoundaryAndKeyword(latMin, latMax, lngMin, lngMax, keyword)
+                .stream()
+                .map(LocationResponse::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LocationResponse> findNearby(double lat, double lng, int radiusInMeters) {
+        return locationRepository.findNearby(lat, lng, radiusInMeters);
+    }
+
+
 }

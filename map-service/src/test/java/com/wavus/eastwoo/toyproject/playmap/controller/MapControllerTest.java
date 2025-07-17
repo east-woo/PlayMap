@@ -214,4 +214,64 @@ class MapControllerTest {
                 .andExpect(jsonPath("$[0].name").value("한강공원"))
                 .andExpect(jsonPath("$[1].name").value("여의도 공원"));
     }
+
+    @Test
+    void 좌표_범위와_키워드로_장소_검색() throws Exception {
+        List<LocationResponse> list = List.of(
+                LocationResponse.builder()
+                        .id(1L)
+                        .name("한강 산책길")
+                        .description("한강변을 따라 걷기 좋은 코스")
+                        .latitude(37.55)
+                        .longitude(126.97)
+                        .address("서울특별시")
+                        .build()
+        );
+
+        given(locationService.findByBoundaryAndKeyword(37.0, 38.0, 126.0, 127.0, "산책")).willReturn(list);
+
+        mockMvc.perform(get("/api/map/locations/in-boundary-with-keyword")
+                        .param("latMin", "37.0")
+                        .param("latMax", "38.0")
+                        .param("lngMin", "126.0")
+                        .param("lngMax", "127.0")
+                        .param("keyword", "산책"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("한강 산책길"));
+    }
+
+    @Test
+    void 거리_기반_장소_조회() throws Exception {
+        // given
+        List<LocationResponse> nearbyLocations = List.of(
+                LocationResponse.builder()
+                        .id(1L)
+                        .name("한강공원")
+                        .description("서울의 대표적인 공원")
+                        .latitude(37.55)
+                        .longitude(126.97)
+                        .address("서울특별시 용산구")
+                        .build(),
+                LocationResponse.builder()
+                        .id(2L)
+                        .name("여의도 공원")
+                        .description("도심 속 녹지 공간")
+                        .latitude(37.53)
+                        .longitude(126.92)
+                        .address("서울특별시 영등포구")
+                        .build()
+        );
+
+        given(locationService.findNearby(37.55, 126.97, 2000)).willReturn(nearbyLocations);
+
+        // when + then
+        mockMvc.perform(get("/api/map/locations/nearby")
+                        .param("lat", "37.55")
+                        .param("lng", "126.97")
+                        .param("radius", "2000"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].name").value("한강공원"))
+                .andExpect(jsonPath("$[1].name").value("여의도 공원"));
+    }
 }
